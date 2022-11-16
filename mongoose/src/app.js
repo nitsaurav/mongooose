@@ -84,5 +84,69 @@ const playlistSchema=new mongoose.Schema({
     }
  }
 
-createDocument();
-createDocument2();
+// createDocument();
+// createDocument2();
+
+// read or querying the documents using mongoose
+
+// all data find
+const getDocument=async() => {
+    const result = await Playlist.find();
+    console.log(result);
+}
+
+// getDocument();
+
+// single data find
+const getDocument2=async() => {
+    const result = await Playlist.find({name:'Node Js5'});
+    console.log(result);
+}
+
+// getDocument2();
+
+//limit set and find dat
+const getDocument3=async() => {
+    const result = await Playlist.find({active:true}).select({name:1}).limit(1);
+    console.log(result);
+}
+
+// getDocument3();
+
+// comparision query operator 
+const getDocument4=async() => {
+    const result = await Playlist.find({videos: { $lt: 100 } }).select({name:1});
+    console.log(result);
+}
+
+const getDocument5=async() => {
+    const result = await Playlist.find({ctype: { $nin: ["back end","datatabse"] } }).select({name:1});
+    console.log(result);
+}
+
+getDocument4();
+getDocument5();
+
+// Logical query operator
+const getDocument6=async() => {
+    const result = await Playlist.find({ $or: [{ctype: "fe"},{name:"ab"}] }).select({name:1});
+    console.log(result);
+}
+getDocument6();
+
+// count
+const getDocument7=async() => {
+    const result = await Playlist.find({ $or: [{ctype: "fe"},{name:"ab"}] }).select({name:1}).count();
+    const result2 = await Playlist.find({ $or: [{ctype: "fe"},{name:"ab"}] }).select({name:1}).countDocuments();
+    console.log(result);
+}
+getDocument7();
+
+// sort
+const getDocument8=async() => {
+    const result = await Playlist.find({ $or: [{ctype: "fe"},{name:"ab"}] }).select({name:1}).sort(); // default ascending order
+    const result3 = await Playlist.find({ $or: [{ctype: "fe"},{name:"ab"}] }).select({name:1}).sort("name:1"); // ascending order
+    const result4 = await Playlist.find({ $or: [{ctype: "fe"},{name:"ab"}] }).select({name:1}).sort({name:-1}); // descending order
+    console.log(result);
+}
+getDocument8();
