@@ -150,3 +150,22 @@ const getDocument8=async() => {
     console.log(result);
 }
 getDocument8();
+
+
+// update
+const updateDocument=async(_id) => {
+    const result= await Playlist.updateOne({_id},{$set:{name:"abc"}});
+    // or
+    const result2= await Playlist.findByIdAndUpdate({_id},{$set:{name:"abc"}},{new:true,useFindAndModify:false}); 
+    console.log(result);
+}
+updateDocument();
+
+// delete document
+const deleteDocument=async(_id) => {
+    const result= await Playlist.deleteOne({_id});
+    // or
+    const result2= await Playlist.findByIdAndDelete({_id}); 
+    console.log(result);
+}
+deleteDocument();
