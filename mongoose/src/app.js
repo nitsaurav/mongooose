@@ -1,4 +1,5 @@
 const mongoose=require("mongoose");
+const validator=require("validator");
 mongoose.connect("mongodb://localhost:27017/testing",{ useNewUrlParser:true,useUnifiedTopology:true}).then(()=>console.log("connection successfully...")).catch((err)=>console.log(err));
 
 //schema
@@ -7,11 +8,45 @@ mongoose.connect("mongodb://localhost:27017/testing",{ useNewUrlParser:true,useU
 const playlistSchema=new mongoose.Schema({
     name:{
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true,
+        minlength: [2,"minimum 2letters"],
+        maxlength: 30
     },
     ctype: String,
-    videos: Number,
+    // videos: Number,
+    // create own custom validation
+    videos: {
+        type: Number,
+        required: true,
+        validate(value){
+            if(value < 0){
+                throw new Error(" Videos count should not be nagatvie");
+            }
+        }
+    },
+    // or
+    // videos: {
+    //     type: Number,
+    //     validate: {
+    //         validator: function(v){
+    //             return v.length < 0
+    //         },
+    //         message: "Videos count should not be negative"
+    //     }
+    // },
     active: Boolean,
+    email:{
+        type: String,
+        required: true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error("Email is invalid");
+            }
+        }
+    },
     date: {
         type: Date,
         default: Date.now
