@@ -9,5 +9,5 @@ const mongoose=require("mongoose");
 //     console.log("connection failed");
 // });
 mongoose.connect("mongodb://localhost:27017/students-api",{ 
-    useNewUrlParser:true,useUnifiedTopology:true
+    useNewUrlParser:true,useUnifiedTopology:true,useFindAndModify:false
 }).then(()=>console.log("connection successfully...")).catch((err)=>console.log(err));
