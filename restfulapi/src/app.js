@@ -1,10 +1,12 @@
 const express=require("express");
 require("./db/conn");
 const Student=require("./models/students");
+const studentRouter=require("./router/student");
 const app=express();
 const port=process.env.PORT || 8000;
 
 app.use(express.json());
+app.use(studentRouter);
 
 app.get('/',(req,res)=>{
 res.send('hello from the other sides');
@@ -76,6 +78,17 @@ app.delete("/student/:id",async(req,res) => {
         }
     }catch(e){ res.status(500).send(e); }
 });
+
+// create a new router
+const router=new express.Router();
+
+// we need to defind the router
+router.get("/student_list",(requ,res) => {
+    res.send("Hlo gus");
+});
+
+// we need to register our route
+app.use(router);
 
 app.listen(port,()=>{
     console.log(`set up at ${port}`);
