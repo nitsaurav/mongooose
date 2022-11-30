@@ -22,14 +22,14 @@ app.post("/students",(req,res) => {
     res.send("hello from the other sides!");
 });
 
-app.post("/students",async(req,res) => {
+app.post("/savestudents",async(req,res) => {
     console.log(req.body);
     try{
         const user=new Student(req.body);
         const createUser=user.save();
         res.status(201).send(createUser);
     }catch(e){ res.status(400).send(e); }
-    res.send("hello from the other sides!");
+    res.send("hello2 from the other sides!");
 });
 
 // get all students data
@@ -57,7 +57,7 @@ app.get("/student/:id",async(req,res) => {
 app.patch("/student/:id",async(req,res) => {
     try{
         const _id=req.params.id;
-        const updatestudentData=await Student.findByIdAndUpdate(_id,req.body,{ new: true });
+        const updatestudentData=await Student.findByIdAndUpdate(_id,req.body,{ new: true,useFindAndModify:false });
         if(!updatestudentData){
             return res.status(400).send();
         }else{
